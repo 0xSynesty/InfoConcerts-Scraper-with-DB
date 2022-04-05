@@ -104,7 +104,7 @@ class Artist():
 
         concerts = []
 
-        # On itère sur chaque case (panel) contentant un concert pour récupérer les informations rattachées
+        # Iterating through panels (e.g. concerts)
         for p in panels:
             concert = {}
 
@@ -116,10 +116,10 @@ class Artist():
             
             print(date)
             
-            # Certaines dates sont des intervalles (ex : du XX au XX), dans ce cas on les traite différemment
+            # Certain dates are intervals (example : June XX to June xx), in this case we treat them differently
             date_is_interval = re.match(r'^Du\s(\d+)\sau\s(\d+)\s(.{6,})', date)
 
-            if date_is_interval: #re.match retourne None s'il ne trouve pas
+            if date_is_interval:
                 concert["date_debut"] = date_is_interval.group(1) + ' '+  date_is_interval.group(3)
                 concert["date_fin"] = date_is_interval.group(2) + ' '+  date_is_interval.group(3)
             else:
@@ -129,7 +129,7 @@ class Artist():
             spectacle = p.find_element_by_class_name('spectacle')
             concert["spectacle"] = spectacle.text
 
-            # find_elements pour retourner une liste vide au lieu d'une erreur si il n'y a pas de festival associé
+            # find_elements allows us not to raise an error if there is not festival associated
             festival = p.find_elements_by_class_name('festival-associe')
             if festival:
                 concert["festival"] = re.sub('Dans le cadre du festival ', '', festival[0].text)
